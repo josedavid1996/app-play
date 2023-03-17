@@ -1,0 +1,218 @@
+@import url('https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@300;400;500;600;700;800&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700&display=swap');
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+body {
+  background-color: #111111;
+  color: #fff;
+  font-family: 'Montserrat', sans-serif;
+  overflow-x: hidden;
+}
+
+#canvas {
+  aspect-ratio: 1 / 1;
+}
+
+@layer components {
+  .container {
+    @apply w-full px-8 mx-auto max-w-7xl;
+  }
+}
+
+/* Button variant */
+.btn-outline-secondary {
+  @apply bg-transparent
+ /* LIGHT */
+ text-secondary
+ border-secondary
+ hover:bg-secondary
+ hover:text-white
+ /* DARK */
+ dark:text-secondary-500
+ dark:border-secondary-500
+ hover:dark:text-white
+ hover:dark:bg-secondary-500;
+}
+
+.btn-outline-primary {
+  @apply bg-transparent
+  /* LIGHT */
+  text-primary 
+  border-primary 
+  hover:bg-primary 
+  hover:text-white;
+}
+
+.btn-outline-primary {
+  @apply bg-transparent
+  /* LIGHT */
+  text-primary 
+  border-primary 
+  hover:bg-primary 
+  hover:text-white;
+}
+
+.btn-outline-white {
+  @apply bg-transparent
+    /* LIGHT */
+  text-white 
+  border-white 
+  hover:bg-white 
+  hover:text-secondary;
+}
+
+.cardBox {
+  font-size: 1.2em;
+  perspective: 1000px;
+  transition: all 0.3s ease 0s;
+  width: 100%;
+}
+/* .cardBoxCircle {
+  font-size: 1.2em;
+  margin: 1% 0 0 1%;
+  perspective: 800px;
+  transition: all 0.3s ease 0s;
+  width: 100%;
+} */
+
+.is-hover {
+  transform: rotateY(180deg);
+}
+.is-active {
+  transform: rotateY(180deg);
+}
+
+.card {
+  background: transparent;
+  cursor: default;
+  transform-style: preserve-3d;
+  transition: transform 0.4s ease 0s;
+  width: 100%;
+  /* -webkit-animation: giro 1s 1;
+  animation: giro 1s 1; */
+}
+
+.card .front,
+.card .back {
+  backface-visibility: hidden;
+  box-sizing: border-box;
+  display: block;
+  font-size: 1.2em;
+  height: 100%;
+  position: absolute;
+  text-align: center;
+  width: 100%;
+}
+
+.card .back {
+  transform: rotateY(180deg);
+}
+
+.card .back a {
+  color: #fff;
+  text-decoration: none;
+  border-radius: 1px;
+
+  transition: all 0.2s ease 0s;
+}
+
+.card .back a:hover {
+  background: #fff;
+  color: #333;
+  text-shadow: 0 0 1px #333;
+}
+
+/* .cardBox:nth-child(3) .card {
+  -webkit-animation: giro 2s 1;
+  animation: giro 2s 1;
+} */
+
+@-webkit-keyframes giro {
+  from {
+    transform: rotateY(180deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+@keyframes giro {
+  from {
+    transform: rotateY(180deg);
+  }
+  to {
+    transform: rotateY(0deg);
+  }
+}
+
+.title-degradado {
+  background: -webkit-linear-gradient(175deg, #3491ea 35%, #fff 100%);
+  -webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+}
+.cut::after {
+  content: '';
+  display: block;
+  position: absolute;
+  top: -7px;
+  right: -14px;
+  width: 30px;
+  height: 20px;
+  background-color: #111111;
+  transform: rotate(50deg);
+  z-index: 20;
+}
+.cut::before {
+  content: '';
+  display: block;
+  position: absolute;
+  bottom: -7px;
+  left: -14px;
+  width: 30px;
+  height: 20px;
+  background-color: #111111;
+  transform: rotate(50deg);
+  z-index: 20;
+}
+
+#img-ruleta {
+  position: relative;
+  z-index: 1;
+}
+.img-ruleta {
+  /*animation-name: infinite-spinning;
+  animation-duration: 4s;
+  animation-timing-function: ease;
+  animation-fill-mode: forwards;*/
+  /*animation-iteration-count: infinite;*/
+  transition: all 4s ease;
+  overflow-x: hidden;
+}
+
+.btn-warning.btn-orange,
+.btn-warning.btn-orange:focus,
+.btn-warning.btn-orange:hover {
+  color: #fff;
+  background-color: #ff2244;
+  border-color: #ff2244;
+  position: relative;
+  z-index: 2;
+}
+
+.ruleta-puntos {
+  color: #fff;
+  text-shadow: 1px 1px 1px #ff2244;
+  text-transform: uppercase;
+}
+
+@keyframes infinite-spinning {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    /*transform: rotate(360deg);*/
+    transform: rotate(1100deg);
+  }
+}
