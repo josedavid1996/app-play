@@ -7,6 +7,8 @@ import { usePlayMemoryStore } from '../../../store/playMemory'
 import ModalCongratulations from '../../shared/Modales/ModalCongratulations'
 import useToggle from '../../../hooks/useToggle'
 import LayoutPage from '../LayoutPage'
+import ModalStartPlay from '@components/shared/Modales/ModalStartPlay'
+import ModalEndPlay from '@components/shared/Modales/ModalEndPlay'
 
 interface dataProps {
   code: string
@@ -24,7 +26,24 @@ interface Props {
 }
 const PlayMemory = ({ data, time = 5, amount = 2 }: Props) => {
   const { isOpen, onClose, onOpen } = useToggle()
+  const {
+    isOpen: isOpenStarPlay,
+    onClose: onCloseStarPlay,
+    onOpen: onOpenisOpenStarPlay
+  } = useToggle()
+  const {
+    isOpen: isOpenEndPlay,
+    onClose: onCloseEndPlay,
+    onOpen: onOpenisOpenEndPlay
+  } = useToggle()
   const [items, setItems] = useState<never[] | dataProps[]>([])
+
+  useEffect(() => {
+    if (amount === 3) {
+      onOpenisOpenStarPlay()
+    }
+  }, [])
+
   // const [counter, setCounter] = useState(0)
   const { counter, setCounter, setIsStartEnd, setIsStart, removeCounter } =
     usePlayMemoryStore((state) => state)
@@ -32,40 +51,69 @@ const PlayMemory = ({ data, time = 5, amount = 2 }: Props) => {
     setIsStartEnd()
   }, [])
   const refValid = useRef<number[]>([])
+  const timerRef = useRef<NodeJS.Timer | null>(null)
   useEffect(() => {
     if (typeof window !== 'undefined') {
       if (items.length === amount) {
         const validItems = items.every((item) => items[0].code === item.code)
 
         if (validItems) {
-          items.map((item) =>
-            document.getElementById(item.id)?.classList.add('is-active')
-          )
-          setCounter()
-          setItems([])
-          const itemsOpen = document.querySelectorAll('.is-active')
-          if (itemsOpen.length === data.length) {
+          if (amount === 3) {
             onOpen()
-
-            itemsOpen.forEach((item) => item.classList.remove('is-active'))
-            itemsOpen.forEach((item) => item.classList.remove('is-hover'))
-            setIsStartEnd()
-          }
-          refValid.current = []
-        }
-        if (!validItems) {
-          setTimeout(() => {
-            document
-              .querySelectorAll('.is-hover')
-              .forEach((item) => item.classList.remove('is-hover'))
             setItems([])
             refValid.current = []
-          }, 2000)
+          }
+          if (amount === 2) {
+            items.map((item) =>
+              document.getElementById(item.id)?.classList.add('is-active')
+            )
+            setCounter()
+            setItems([])
+            const itemsOpen = document.querySelectorAll('.is-active')
+            if (itemsOpen.length === data.length) {
+              onOpen()
+
+              // itemsOpen.forEach((item) => item.classList.remove('is-active'))
+              // itemsOpen.forEach((item) => item.classList.remove('is-hover'))
+            }
+
+            refValid.current = []
+          }
+        }
+        if (!validItems) {
+          if (amount === 2) {
+            timerRef.current = setTimeout(() => {
+              document
+                .querySelectorAll('.is-hover')
+                .forEach((item) => item.classList.remove('is-hover'))
+              setItems([])
+              refValid.current = []
+            }, 1000)
+          }
+          if (amount === 3) {
+            onOpenisOpenEndPlay()
+            setItems([])
+            refValid.current = []
+          }
+        }
+
+        return () => {
+          if (timerRef.current) clearInterval(timerRef.current)
         }
       }
       // Client-side-only code
     }
   }, [items.length])
+
+  const handelClick = () => {
+    document
+      .querySelectorAll('.is-hover')
+      .forEach((item) => item.classList.remove('is-hover'))
+    document
+      .querySelectorAll('.is-active')
+      .forEach((item) => item.classList.remove('is-active'))
+    setIsStartEnd()
+  }
   return (
     <>
       <LayoutPage
@@ -73,16 +121,20 @@ const PlayMemory = ({ data, time = 5, amount = 2 }: Props) => {
         pb="sm:pt-5 pb-5"
       >
         <>
-          <div className="flex justify-between mb-4 px-4">
-            <div className="flex gap-4 items-center text-primary">
-              <Icon name="time" />
-              <Counter time={time} />
+          {/* {amount === 2 && ( */}
+          {amount === 2 && (
+            <div className="flex justify-between mb-4 px-4">
+              <div className="flex gap-4 items-center text-primary">
+                <Icon name="time" />
+                <Counter time={time} />
+              </div>
+              <div className="flex gap-2 items-center text-primary ">
+                <Icon name="tiro" className="text-2xl " />
+                <span>{counter * 10}</span>
+              </div>
             </div>
-            <div className="flex gap-2 items-center text-primary ">
-              <Icon name="tiro" className="text-2xl " />
-              <span>{counter * 10}</span>
-            </div>
-          </div>
+          )}
+
           <div className="grid grid-cols-3 h-[calc(100%_-_156px)] sm:h-[calc(100%_-_160px)] gap-5 px-4">
             {useMemo(
               () => (
@@ -137,12 +189,21 @@ const PlayMemory = ({ data, time = 5, amount = 2 }: Props) => {
           </div>
         </>
       </LayoutPage>
-
+      <ModalEndPlay
+        isOpen={isOpenEndPlay}
+        onClose={onCloseEndPlay}
+        onClick={() => {
+          handelClick()
+          onCloseEndPlay()
+        }}
+      />
+      <ModalStartPlay isOpen={isOpenStarPlay} onClose={onCloseStarPlay} />
       <ModalCongratulations
         onClick={() => {
           setIsStart()
           removeCounter()
           onClose()
+          handelClick()
         }}
         isOpen={isOpen}
         onClose={onClose}

@@ -45,7 +45,7 @@ const RaspaGana = () => {
                   width={isWidth}
                   height={isHeight}
                   image="/rapa-gana.png"
-                  finishPercent={50}
+                  finishPercent={80}
                   onComplete={() => {
                     setIsView(false)
                     parseInt(`${isNumberRandom * 10}`) <= 5
