@@ -5,6 +5,7 @@ import Image from 'next/image'
 import ModalEndPlay from '@components/shared/Modales/ModalEndPlay'
 import ModalCongratulations from '@components/shared/Modales/ModalCongratulations'
 import useToggle from '@hooks/useToggle'
+import ModalStartPlay from '@components/shared/Modales/ModalStartPlay'
 
 const RaspaGana = () => {
   const [isView, setIsView] = useState(false)
@@ -17,12 +18,22 @@ const RaspaGana = () => {
     onClose: onCloseCongratulations,
     onOpen: onOpenCongratulations
   } = useToggle()
+  const {
+    isOpen: isOpenStarPlay,
+    onClose: onCloseStarPlay,
+    onOpen: onOpenStarPlay
+  } = useToggle()
 
   const refCard = useRef<HTMLDivElement | null>(null)
 
   // const onClickReset = () => {
   //   ref.current && ref.current.reset()
   // }
+
+  useEffect(() => {
+    onOpenStarPlay()
+  }, [])
+
   useEffect(() => {
     if (typeof window !== 'undefined') {
       // Client-side-only code
@@ -88,6 +99,12 @@ const RaspaGana = () => {
         }}
         isOpen={isOpenCongratulations}
         onClose={onCloseCongratulations}
+      />
+
+      <ModalStartPlay
+        isOpen={isOpenStarPlay}
+        onClose={onCloseStarPlay}
+        text="Bienvenido a Raspa y gana,en este juego debes raspar y raspar para saber si ganaste o perdiste"
       />
     </>
   )

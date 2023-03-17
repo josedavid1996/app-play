@@ -1,4 +1,5 @@
 import ModalCongratulations from '@components/shared/Modales/ModalCongratulations'
+import ModalStartPlay from '@components/shared/Modales/ModalStartPlay'
 import WheelComponent from '@components/shared/Weel'
 import useToggle from '@hooks/useToggle'
 import React, { useEffect, useMemo, useRef, useState } from 'react'
@@ -8,6 +9,11 @@ const RuletaPremios = () => {
   const [isWidth, setIsWidth] = useState(0)
   const [isHeight, setIsHeight] = useState(0)
   const [isGanador, setIsGanador] = useState('')
+  const {
+    isOpen: isOpenStarPlay,
+    onClose: onCloseStarPlay,
+    onOpen: onOpenStarPlay
+  } = useToggle()
   const refCard = useRef<HTMLDivElement | null>(null)
   const {
     isOpen: isOpenCongratulations,
@@ -19,7 +25,7 @@ const RuletaPremios = () => {
     'TV',
     'Cama',
     'Laptop',
-    'Mubles',
+    'Muebles',
     'Tablet',
     'Ropa',
     'Vajilla'
@@ -38,6 +44,9 @@ const RuletaPremios = () => {
     setIsGanador(winner)
     onOpenCongratulations()
   }
+  useEffect(() => {
+    onOpenStarPlay()
+  }, [])
 
   useEffect(() => {
     if (typeof window !== 'undefined') {
@@ -81,6 +90,11 @@ const RuletaPremios = () => {
           )}
         </div>
       </LayoutPage>
+      <ModalStartPlay
+        isOpen={isOpenStarPlay}
+        onClose={onCloseStarPlay}
+        text="Bienvenido a Descubre,en este juego debes girar la ruleta y esperar tu premio "
+      />
       <ModalCongratulations
         text={isGanador}
         onClick={() => {

@@ -23,13 +23,14 @@ interface Props {
   }[]
   time?: number
   amount?: number
+  text?: string
 }
-const PlayMemory = ({ data, time = 5, amount = 2 }: Props) => {
+const PlayMemory = ({ data, time = 5, amount = 2, text }: Props) => {
   const { isOpen, onClose, onOpen } = useToggle()
   const {
     isOpen: isOpenStarPlay,
     onClose: onCloseStarPlay,
-    onOpen: onOpenisOpenStarPlay
+    onOpen: onOpenStarPlay
   } = useToggle()
   const {
     isOpen: isOpenEndPlay,
@@ -40,7 +41,7 @@ const PlayMemory = ({ data, time = 5, amount = 2 }: Props) => {
 
   useEffect(() => {
     if (amount === 3) {
-      onOpenisOpenStarPlay()
+      onOpenStarPlay()
     }
   }, [])
 
@@ -197,7 +198,11 @@ const PlayMemory = ({ data, time = 5, amount = 2 }: Props) => {
           onCloseEndPlay()
         }}
       />
-      <ModalStartPlay isOpen={isOpenStarPlay} onClose={onCloseStarPlay} />
+      <ModalStartPlay
+        isOpen={isOpenStarPlay}
+        onClose={onCloseStarPlay}
+        text={text}
+      />
       <ModalCongratulations
         onClick={() => {
           setIsStart()

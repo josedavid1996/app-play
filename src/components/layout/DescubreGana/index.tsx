@@ -5,6 +5,7 @@ import ModalEndPlay from '@components/shared/Modales/ModalEndPlay'
 import useToggle from '@hooks/useToggle'
 import ModalCongratulations from '@components/shared/Modales/ModalCongratulations'
 import LayoutPage from '../LayoutPage'
+import ModalStartPlay from '@components/shared/Modales/ModalStartPlay'
 
 const dataFalsa = [
   {
@@ -57,11 +58,18 @@ const DescubreGana = () => {
     onClose: onCloseCongratulations,
     onOpen: onOpenCongratulations
   } = useToggle()
+  const {
+    isOpen: isOpenStarPlay,
+    onClose: onCloseStarPlay,
+    onOpen: onOpenStarPlay
+  } = useToggle()
   const [position, setPosition] = useState<number[]>([])
 
   const timerRef = useRef<NodeJS.Timer | null>(null)
+  const isValidRef = useRef<boolean>(true)
 
   const handelClick = (id: string, code: number) => {
+    if (!isValidRef.current) return
     document.getElementById(id)?.classList.add('is-hover')
     setIsIntentos((prev) => prev + 1)
 
@@ -69,7 +77,12 @@ const DescubreGana = () => {
   }
 
   useEffect(() => {
+    onOpenStarPlay()
+  }, [])
+
+  useEffect(() => {
     if (position.length === 3) {
+      isValidRef.current = false
       if (window !== undefined) {
         timerRef.current = setTimeout(() => {
           document
@@ -81,6 +94,7 @@ const DescubreGana = () => {
 
           if (result) onOpen()
           if (!result) onOpenCongratulations()
+          isValidRef.current = true
         }, 2000)
         return () => {
           if (timerRef.current) clearInterval(timerRef.current)
@@ -215,6 +229,11 @@ const DescubreGana = () => {
         onClick={onCloseCongratulations}
         isOpen={isOpenCongratulations}
         onClose={onCloseCongratulations}
+      />
+      <ModalStartPlay
+        isOpen={isOpenStarPlay}
+        onClose={onCloseStarPlay}
+        text="Bienvenido a Descubre,en este juego debes de encontrar tres planetas pero cuidado si escoges mal puedes perder"
       />
     </>
   )

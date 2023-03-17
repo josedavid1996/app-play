@@ -50,7 +50,16 @@ const dataFalsaPorTres = [
 ]
 
 const JuegoMemoriaCookies = () => {
-  return <PlayMemory data={dataFalsaPorTres} time={2} amount={3} />
+  return (
+    <PlayMemory
+      data={dataFalsaPorTres}
+      time={2}
+      amount={3}
+      text={
+        'Bienvenido a Memory, en este juego tienes que decubrir tres imagenes iguales,solo tienes una oportunidad'
+      }
+    />
+  )
 }
 
 export default JuegoMemoriaCookies

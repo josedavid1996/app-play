@@ -88,7 +88,11 @@ const Counter = ({
         isOpen={isOpen}
         onClose={onClose}
       />
-      <ModalStartPlay isOpen={isOpenStar} onClose={onCloseStar} />
+      <ModalStartPlay
+        isOpen={isOpenStar}
+        onClose={onCloseStar}
+        text="¡Bienvenido a Memory, en este juego tienes que decubrir todos los pares  que existen en menos de 2 minutos"
+      />
     </>
   )
 }
