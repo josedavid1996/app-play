@@ -55,6 +55,12 @@ const PlayMemory = ({ data, time = 5, amount = 2, text }: Props) => {
   const timerRef = useRef<NodeJS.Timer | null>(null)
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      if (refValid.current.length > amount) {
+        document
+          .querySelectorAll('.is-hover')
+          .forEach((item) => item.classList.remove('is-hover'))
+        refValid.current = []
+      }
       if (items.length === amount) {
         const validItems = items.every((item) => items[0].code === item.code)
 
@@ -97,7 +103,6 @@ const PlayMemory = ({ data, time = 5, amount = 2, text }: Props) => {
             refValid.current = []
           }
         }
-
         return () => {
           if (timerRef.current) clearInterval(timerRef.current)
         }
@@ -115,6 +120,7 @@ const PlayMemory = ({ data, time = 5, amount = 2, text }: Props) => {
       .forEach((item) => item.classList.remove('is-active'))
     setIsStartEnd()
   }
+
   return (
     <>
       <LayoutPage
