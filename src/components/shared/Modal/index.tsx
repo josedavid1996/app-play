@@ -23,7 +23,7 @@ const Modal = ({
             'fixed inset-0 top-0 w-full h-screen grid place-items-center transition-all duration-300 ease-in-out'
           ])}
         >
-          <Overlay show={isOpen} onClick={onClose} />
+          <Overlay show={isOpen} />
           <div className="z-20 grid place-items-center">{children}</div>
         </div>
       )}
