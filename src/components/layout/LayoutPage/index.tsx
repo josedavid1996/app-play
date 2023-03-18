@@ -13,7 +13,7 @@ const LayoutPage = ({ children, title, pb }: Props) => {
     <>
       <div className="w-full min-h-screen flex justify-center items-center relative">
         <div
-          className={`bg-[#111] w-[95%] h-[85vh] sm:w-[85%] sm:h-[85vh] md:w-[70%] md:h-[70vh] pt-8  ${pb} sm:pb-0 border border-primary relative max-w-[900px]`}
+          className={`bg-[#111] w-[95%] h-[80vh] sm:w-[85%] sm:h-[85vh] md:w-[80%] md:h-[80vh] pt-8  ${pb} sm:pb-0 border border-primary relative max-w-[900px]`}
         >
           <Link href="/">
             <div className="absolute top-0 sm:top-2 left-5 text-primary flex gap-2 cursor-pointer items-center">

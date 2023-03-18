@@ -4,11 +4,19 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  overflow: hidden;
+}
+
 body {
   background-color: #111111;
   color: #fff;
   font-family: 'Montserrat', sans-serif;
-  overflow-x: hidden;
+  overflow: hidden;
+  height: 100%;
+  position: fixed;
+  -webkit-overflow-scrolling: touch;
+  width: 100%;
 }
 
 #canvas {
